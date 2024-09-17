@@ -18,10 +18,14 @@ const configurePassport = () => {
       if (user) {
         return done(null, user);
       }
+
+      const isAdmin = ['tcerdeyra@alumnos.unsada.edu.ar', 'cerdeyra@alumnos.unsada.edu.ar'].includes(profile.emails[0].value);
+
       user = new User({
         googleId: profile.id,
         email: profile.emails[0].value,
         name: profile.displayName,
+        isAdmin: isAdmin
       });
       await user.save();
       done(null, user);

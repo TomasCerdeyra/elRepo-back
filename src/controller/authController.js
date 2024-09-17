@@ -4,14 +4,11 @@ class AuthController {
     static googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
 
     static redirectAfterSuccess = (req, res) => {
-        // Verificamos si el usuario está autenticado y si su correo es de administrador
-        const adminEmails = ['tcerdeyra@alumnos.unsada.edu.ar', 'cerdeyra@alumnos.unsada.edu.ar'];
-
-        if (adminEmails.includes(req.user.email)) {
-            return res.redirect('/admin');  // Redirigir a la página de administrador
-        }
-
-        res.redirect('/');  // Redirigir a la página principal si no es administrador
+        if (req.user.isAdmin) {
+            res.redirect('/admin');  // Redirige al panel de administrador si es admin
+        } else {
+            res.redirect('/');  // Redirige a la página principal para usuarios normales
+        }  
     };
 
     static logout = (req, res) => {
