@@ -3,6 +3,7 @@ import passport from 'passport';
 class AuthController {
     static googleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
 
+    //http://localhost:8080/api/auth/google/
     static redirectAfterSuccess = (req, res) => {
         if (req.user.isAdmin) {
             res.redirect('/admin');  // Redirige al panel de administrador si es admin

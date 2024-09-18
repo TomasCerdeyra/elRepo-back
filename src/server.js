@@ -4,9 +4,9 @@ import passport from "passport";
 import configurePassport from "./config/passport.js";
 import { connectDB } from "./config/db.js";
 import session from "express-session";
-import authRoutes from './routes/authRoutes.js'
+import AuthRoutes from './routes/authRoutes.js'
 import CarrerasRoutes from "./routes/carrerasRoutes.js";
-
+import MateriasRoutes from './routes/materiasRoutes.js'
 
 //Configuro variables de entorlo para la apiclacion
 dotenv.config();
@@ -30,7 +30,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Rutas
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", AuthRoutes)
 app.use("/api/carreras", CarrerasRoutes);
+app.use("/api/materias", MateriasRoutes);
 
 export default app;
