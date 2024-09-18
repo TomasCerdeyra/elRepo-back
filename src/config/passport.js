@@ -19,6 +19,7 @@ const configurePassport = () => {
         return done(null, user);
       }
 
+      //Estos correros mas adelante tomarlos desde un archivo fuera del programa
       const isAdmin = ['tcerdeyra@alumnos.unsada.edu.ar', 'cerdeyra@alumnos.unsada.edu.ar'].includes(profile.emails[0].value);
 
       user = new User({
