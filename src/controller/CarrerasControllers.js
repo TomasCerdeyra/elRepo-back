@@ -1,6 +1,7 @@
 import Carreras from "../models/Carerra.js";
 
 class carrerasController {
+  
   static createCarreras = async (req, res) => {
     const carrera = new Carreras(req.body);
     try {
