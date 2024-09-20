@@ -68,6 +68,25 @@ class materiasController {
         }
       };
 
-}
+      static getMateriaByCarrera = async (req, res) => {
+        const { id } = req.params;
+        
+        try {
+            // Busca todas las materias que tienen el id en el campo 'carreras: []' 
+            const materia = await Materias.find({carreras: id});
+           
+            if (!materia) {
+                return res.status(404).send('Materia no encontrada en la carrera');
+              }
+            res.json(materia);  //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Error al obtener las materias por carrera')
+        }
+    };
+
+      }
+
+
 
 export default materiasController

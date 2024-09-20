@@ -8,7 +8,6 @@ rooter.put('/:id', /* isAdminMiddle */ /*FALTARIA MIDDLEWARE*/materiasController
 rooter.delete('/:id',/* isAdminMiddle */ /*FALTARIA MIDDLEWARE*/ materiasController.deleteMateria);
 
 rooter.get('/', materiasController.getAllMaterias);
-
-
+rooter.get('/materiaByCarrera/:id', materiasController.getMateriaByCarrera);
 
 export default rooter;
