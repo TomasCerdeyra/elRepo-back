@@ -6,9 +6,9 @@ class AuthController {
     //http://localhost:8080/api/auth/google/
     static redirectAfterSuccess = (req, res) => {
         if (req.user.isAdmin) {
-            res.redirect('/admin');  // Redirige al panel de administrador si es admin
+            res.redirect('http://localhost:5173/admin');  // Redirige al panel de administrador si es admin
         } else {
-            res.redirect('/');  // Redirige a la página principal para usuarios normales
+            res.redirect('http://localhost:5173/');  // Redirige a la página principal para usuarios normales
         }  
     };
 
