@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from 'cors'
 import passport from "passport";
 import configurePassport from "./config/passport.js";
 import { connectDB } from "./config/db.js";
@@ -19,6 +20,8 @@ const app = express();
 
 //Permito el formato json
 app.use(express.json());
+
+app.use(cors())
 
 // Configura la sesión
 app.use(session({
