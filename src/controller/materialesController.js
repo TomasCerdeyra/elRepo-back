@@ -19,7 +19,7 @@ class MaterialesController {
         descripcion,
         profesor,
         rutaArchivo,
-        materia       //Aca gurado el ID de la materia como referencia
+        materia   
       });
 
       await nuevoMaterial.save();

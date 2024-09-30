@@ -75,13 +75,27 @@ class materiasController {
         const { id } = req.params;
 
         try {
-            // Busca todas las materias que tienen el id en el campo 'carreras: []' 
-            const materia = await Materias.find({ carreras: id });
 
-            if (!materia) {
-                return res.status(404).send('Materia no encontrada en la carrera');
+            const carrera = await Carreras.findById(id);
+
+            if (!carrera) {
+                return res.status(404).send('Carrear no encontrada');
             }
-            res.json(materia);  //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
+
+            // Busca todas las materias que tienen el id en el campo 'carreras: []' 
+            const materias = await Materias.find({ carreras: id });
+
+            if (!materias) {
+                return res.status(404).send('Materias no encontrada en la carrera');
+            }
+            
+            res.json({
+                carrera: {
+                    name: carrera.name
+                },
+                materias: materias
+            });
+            //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
         } catch (error) {
             console.log(error);
             res.status(500).send('Error al obtener las materias por carrera')
