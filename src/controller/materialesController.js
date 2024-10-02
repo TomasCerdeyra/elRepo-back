@@ -71,13 +71,23 @@ class MaterialesController {
   static getMaterialesByMateria = async (req, res) => {
 
     try {
+
+      const materia = await Materias.findById(req.params.id)
+
+      if (!materia) {
+        return res.status(404).send('Materia no encontrada');
+      }
+
       const materiales = await Material.find({materia: req.params.id})
 
       if (!materiales) {
         return res.status(404).send('Esta materia no tiene material en este momento');
       }
 
-      res.json(materiales)
+      res.json({
+        materia: materia.name,
+        materiales: materiales
+      })
     } catch (error) {
       console.log(error);
       res.status(500).send('Error al obtener los materiales por materia')

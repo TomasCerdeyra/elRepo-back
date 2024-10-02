@@ -90,9 +90,7 @@ class materiasController {
             }
             
             res.json({
-                carrera: {
-                    name: carrera.name
-                },
+                carrera: carrera.name,
                 materias: materias
             });
             //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
