@@ -30,6 +30,22 @@ class MaterialesController {
     }
   }
 
+  //Obetener un material
+  static getMaterial = async (req, res) => {
+    try {
+      const material = await Material.findOne({_id: req.params.id})
+
+      if(!material){
+        return res.status(404).send('Material no encontrdo')
+      }
+
+      res.json(material)
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error al obtener el material');
+    }
+  }
+
   // Obtener todos los materiales
   static getMateriales = async (req, res) => {
     try {

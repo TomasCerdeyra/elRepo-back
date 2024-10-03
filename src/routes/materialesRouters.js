@@ -9,7 +9,7 @@ const router = Router();
 //Subir material
 router.post('/', upload.single('archivo'), MaterialesController.subirMaterial);
 
-//Obtener material, Seguro q a esta la saquemos
+//Obtener todos los materiales, Seguro q a esta la saquemos
 router.get('/', MaterialesController.getMateriales);
 
 // Eliminar una material
@@ -17,10 +17,14 @@ router.delete('/:id', MaterialesController.eliminarMaterial);
 
 //Actualizar un material
 
+//Obtener un material
+router.get('/:id', MaterialesController.getMaterial)
+
 //----------------------------------------------------------------------------------
 
+
 //Obtener materialies de una materia
-router.get('/:id', MaterialesController.getMaterialesByMateria)
+router.get('/materia/:id', MaterialesController.getMaterialesByMateria)
 
 //Reportar un material
 router.put('/report/:id', MaterialesController.reportMaterial)
