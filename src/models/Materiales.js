@@ -27,6 +27,11 @@ const MaterialSchema = new mongoose.Schema({
     ref: 'Materia',  
     required: true,
   },
+  tipo: {
+    type: String,
+    required: true,
+    trim: true
+  },
   denuncias: {
     type: Number,
     default: 0,

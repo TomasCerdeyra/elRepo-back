@@ -1,6 +1,7 @@
 import Material from '../models/Materiales.js';
 import fs from 'fs'
 import Materias from '../models/Materias.js';
+import path from 'path';
 
 class MaterialesController {
 
@@ -8,9 +9,19 @@ class MaterialesController {
   static subirMaterial = async (req, res) => {
     const { nombre, anio, descripcion, profesor, materia } = req.body;
 
-    const folderName = req.file.destination.split('\\').pop();
+    const folderName = req.file.destination.split('\\').pop(); //Agarro el nombre de la carpeta donde va a estar el archivo
+    const rutaArchivo = `${folderName}/${req.file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
 
-    const rutaArchivo = `${folderName}/${req.file.filename}`; //Agarro la referencia de la ruta de la imagen
+    const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
+    
+    let tipo = '';
+    if (['.jpg', '.jpeg', '.png', '.gif', '.svg'].includes(extension)) {
+      tipo = 'imagen';
+    } else if (['.pdf', '.doc', '.docx', '.ppt', '.pptx'].includes(extension)) {
+      tipo = 'archivo';
+    } else {
+      tipo = 'desconocido';
+    }
 
     try {
       const nuevoMaterial = new Material({
@@ -19,7 +30,8 @@ class MaterialesController {
         descripcion,
         profesor,
         rutaArchivo,
-        materia   
+        materia,
+        tipo
       });
 
       await nuevoMaterial.save();
@@ -27,15 +39,15 @@ class MaterialesController {
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al subir el material');
-    }
+    } 
   }
 
   //Obetener un material
   static getMaterial = async (req, res) => {
     try {
-      const material = await Material.findOne({_id: req.params.id})
+      const material = await Material.findOne({ _id: req.params.id })
 
-      if(!material){
+      if (!material) {
         return res.status(404).send('Material no encontrdo')
       }
 
@@ -94,7 +106,7 @@ class MaterialesController {
         return res.status(404).send('Materia no encontrada');
       }
 
-      const materiales = await Material.find({materia: req.params.id})
+      const materiales = await Material.find({ materia: req.params.id })
 
       if (!materiales) {
         return res.status(404).send('Esta materia no tiene material en este momento');
@@ -108,7 +120,7 @@ class MaterialesController {
       console.log(error);
       res.status(500).send('Error al obtener los materiales por materia')
     }
-  } 
+  }
 
   //Denunciar un material
   static reportMaterial = async (req, res) => {
