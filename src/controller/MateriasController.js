@@ -76,23 +76,14 @@ class materiasController {
 
         try {
 
-            const carrera = await Carreras.findById(id);
-
-            if (!carrera) {
-                return res.status(404).send('Carrear no encontrada');
-            }
-
-            // Busca todas las materias que tienen el id en el campo 'carreras: []' 
+            // Busca todas las materias que tienen el id 
             const materias = await Materias.find({ carreras: id });
 
             if (!materias) {
                 return res.status(404).send('Materias no encontrada en la carrera');
             }
             
-            res.json({
-                carrera: carrera.name,
-                materias: materias
-            });
+            res.json(materias);
             //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
         } catch (error) {
             console.log(error);

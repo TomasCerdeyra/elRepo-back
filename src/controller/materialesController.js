@@ -112,10 +112,7 @@ class MaterialesController {
         return res.status(404).send('Esta materia no tiene material en este momento');
       }
 
-      res.json({
-        materia: materia.name,
-        materiales: materiales
-      })
+      res.json(materiales)
     } catch (error) {
       console.log(error);
       res.status(500).send('Error al obtener los materiales por materia')
@@ -140,6 +137,26 @@ class MaterialesController {
       return res.status(500).send('Error al registrar la denuncia');
     }
   }
+
+
+  static eliminarDenuncia = async (req, res) => {
+    try {
+      const material = await Material.findById(req.params.id);
+
+      if (!material) {
+        return res.status(404).send('Material no encontrado');
+      }
+      // Incrementar el campo denuncias
+      material.denuncias = 0;
+      await material.save();
+
+      return res.status(200).send('Denuncia eliminada corrertamente');
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send('Error al eliminar la denuncia denuncia');
+    }
+  }
+
 }
 
 

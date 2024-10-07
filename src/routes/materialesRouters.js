@@ -29,6 +29,8 @@ router.get('/materia/:id', MaterialesController.getMaterialesByMateria)
 //Reportar un material
 router.put('/report/:id', MaterialesController.reportMaterial)
 
+router.put('/deletereport/:id', MaterialesController.eliminarDenuncia)
+
 
 
 export default router;
