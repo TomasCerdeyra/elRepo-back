@@ -9,7 +9,7 @@ class AuthController {
             res.redirect('http://localhost:5173/admin');  // Redirige al panel de administrador si es admin
         } else {
             res.redirect('http://localhost:5173/home');  // Redirige a la página principal para usuarios normales
-        }  
+        }
     };
 
     static logout = (req, res) => {
@@ -17,9 +17,18 @@ class AuthController {
             if (err) {
                 return next(err);
             }
-            res.redirect('/login');  // Redirigir a la página de login después de cerrar sesión
+            req.session.destroy();
+            res.redirect('http://localhost:5173/');  // Redirigir a la página de login después de cerrar sesión
         });
     };
+
+    static userStatus = (req, res) => {
+        if (req.isAuthenticated()) {
+            return res.json({ logueado: true, user: req.user });
+        } else {
+            return res.json({ logueado: false });
+        }
+    }
 }
 
 export default AuthController;
