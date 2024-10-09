@@ -8,7 +8,7 @@ class AuthController {
         if (req.user.isAdmin) {
             res.redirect('http://localhost:5173/admin');  // Redirige al panel de administrador si es admin
         } else {
-            res.redirect('http://localhost:5173/');  // Redirige a la página principal para usuarios normales
+            res.redirect('http://localhost:5173/home');  // Redirige a la página principal para usuarios normales
         }  
     };
 
