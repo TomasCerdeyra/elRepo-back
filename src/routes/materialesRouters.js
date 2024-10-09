@@ -18,7 +18,7 @@ router.delete('/:id', MaterialesController.eliminarMaterial);
 //Actualizar un material
 
 //Obtener un material
-router.get('/:id', MaterialesController.getMaterial)
+router.get('/material/:id', MaterialesController.getMaterial)
 
 //----------------------------------------------------------------------------------
 
@@ -29,7 +29,11 @@ router.get('/materia/:id', MaterialesController.getMaterialesByMateria)
 //Reportar un material
 router.put('/report/:id', MaterialesController.reportMaterial)
 
+//Eliminar reporte de una materia
 router.put('/deletereport/:id', MaterialesController.eliminarDenuncia)
+
+//Obtener materiales reportados
+router.get('/reportes', MaterialesController.getMaterialesReportados)
 
 
 

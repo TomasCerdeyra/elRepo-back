@@ -13,7 +13,7 @@ class MaterialesController {
     const rutaArchivo = `${folderName}/${req.file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
 
     const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
-    
+
     let tipo = '';
     if (['.jpg', '.jpeg', '.png', '.gif', '.svg'].includes(extension)) {
       tipo = 'imagen';
@@ -39,7 +39,7 @@ class MaterialesController {
     } catch (error) {
       console.error(error);
       res.status(500).send('Error al subir el material');
-    } 
+    }
   }
 
   //Obetener un material
@@ -139,6 +139,7 @@ class MaterialesController {
   }
 
 
+  //Eliminar reporte de un material
   static eliminarDenuncia = async (req, res) => {
     try {
       const material = await Material.findById(req.params.id);
@@ -154,6 +155,23 @@ class MaterialesController {
     } catch (error) {
       console.log(error);
       return res.status(500).send('Error al eliminar la denuncia denuncia');
+    }
+  }
+
+  //Obtener las materias reportadas
+  static getMaterialesReportados = async (req, res) => {
+    try {
+      const materialesReportados = await Material.find({ denuncias: { $gt: 0 } });
+
+      if (!materialesReportados || materialesReportados.length === 0) {
+        return res.status(404).send('No hay materiales denunciados');
+    }
+
+      res.json(materialesReportados)
+    } catch (error) {
+      console.log(error);
+      
+      return res.status(500).send('Error al obtener materiales reportados');
     }
   }
 
