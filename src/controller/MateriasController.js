@@ -82,7 +82,7 @@ class materiasController {
             if (!materias) {
                 return res.status(404).send('Materias no encontrada en la carrera');
             }
-            
+
             res.json(materias);
             //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
         } catch (error) {
@@ -90,6 +90,36 @@ class materiasController {
             res.status(500).send('Error al obtener las materias por carrera')
         }
     };
+
+    static getMateriaByName = async (req, res) => {
+        const { name } = req.query;
+    
+        // Normaliza el nombre ingresado y elimina tildes
+        const normalizedInputName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    
+        try {
+            // Busca todas las materias
+            const materias = await Materias.find();
+    
+            // Busca la materia cuya versión normalizada coincida con el input normalizado
+            const matchedMateria = materias.find(materia => {
+                const normalizedName = materia.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                return normalizedName === normalizedInputName;
+            });
+    
+            if (!matchedMateria) {
+                return res.status(404).json({ message: 'Materia no encontrada' });
+            }
+    
+            res.json(matchedMateria);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Error al obtener la materia por nombre');
+        }
+    };
+
+    
+    
 
 }
 

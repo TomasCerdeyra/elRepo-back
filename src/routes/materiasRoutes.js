@@ -1,5 +1,5 @@
 import { Router } from "express";
-import materiasController from "../controller/materiasController.js";
+import materiasController from "../controller/MateriasController.js";
 
 const rooter = Router()
 
@@ -9,5 +9,6 @@ rooter.delete('/:id',/*FALTARIA MIDDLEWARE*/ materiasController.deleteMateria);
 
 rooter.get('/', materiasController.getAllMaterias);
 rooter.get('/:id', materiasController.getMateriaByCarrera);
+rooter.get('/materia/name', materiasController.getMateriaByName)
 
 export default rooter;
