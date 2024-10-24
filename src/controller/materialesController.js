@@ -10,7 +10,7 @@ class MaterialesController {
     const { nombre, anio, descripcion, profesor, materia } = req.body;
 
     const folderName = req.file.destination.split('\\').pop(); //Agarro el nombre de la carpeta donde va a estar el archivo
-    const rutaArchivo = `${folderName}/${req.file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
+    const rutaArchivo = `uploads/${folderName}/${req.file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
 
     const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
 
@@ -79,6 +79,10 @@ class MaterialesController {
       }
 
       // Eliminar el archivo del sistema de archivos
+      console.log(fs);
+      
+      console.log(material.rutaArchivo);
+      
       fs.unlink(material.rutaArchivo, (err) => {
         if (err) {
           console.error(err);
@@ -165,7 +169,7 @@ class MaterialesController {
 
       if (!materialesReportados || materialesReportados.length === 0) {
         return res.status(404).send('No hay materiales denunciados');
-    }
+      }
 
       res.json(materialesReportados)
     } catch (error) {
