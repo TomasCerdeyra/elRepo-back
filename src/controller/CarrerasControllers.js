@@ -34,15 +34,15 @@ class carrerasController {
     const { id } = req.params;
     try {
 
-      const carrera = await Carreras.find(id)
+      const carrera = await Carreras.findById(id)
       if (!carrera) {
         return res.status(404).send('Carrera no encontrada');
       }
 
       //verifico que la carrera no tenga materias asociadas
       const materiasAsociadas = await Materias.find({ 'carreras': id })
-      if (materiasAsociadas > 0) {
-        return res.status(404).send('No se puede eliminar la carrera. Hay materias asociadas.')
+      if (materiasAsociadas.length > 0) {
+        return res.status(400).send('No se puede eliminar la carrera. Hay materias asociadas.')
       }
 
       await Carreras.findByIdAndDelete(id);
@@ -63,6 +63,20 @@ class carrerasController {
       res.status(500).send('Error al obtener las carreras');
     }
   };
+
+  static getCarreraById = async (req, res) => {
+    const { id } = req.params
+    try {
+      const carrera = await Carreras.findById(id)
+      if (!carrera) {
+        return res.status(404).send('Carrera no encontrada');
+      }
+      res.json(carrera)
+
+    } catch (error) {
+      res.status(500).send('Error al encontrar la carrera');
+    }
+  }
 }
 
 export default carrerasController;
