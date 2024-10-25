@@ -18,20 +18,20 @@ const MaterialSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  rutaArchivo: {
+  rutasArchivos: [{
     type: String, 
     required: true,
-  },
+  }],
   materia: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Materia',  
     required: true,
   },
-  tipo: {
+  tipo: [{
     type: String,
     required: true,
     trim: true
-  },
+  }], 
   denuncias: {
     type: Number,
     default: 0,

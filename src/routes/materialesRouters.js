@@ -7,7 +7,7 @@ const router = Router();
 //CRUD ----------------------------------------------------------------------------
 
 //Subir material
-router.post('/', upload.single('archivo'), MaterialesController.subirMaterial);
+router.post('/', upload.array('archivos', 5), MaterialesController.subirMaterial);
 
 //Obtener todos los materiales, Seguro q a esta la saquemos
 router.get('/', MaterialesController.getMateriales);

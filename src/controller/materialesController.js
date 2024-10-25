@@ -9,29 +9,39 @@ class MaterialesController {
   static subirMaterial = async (req, res) => {
     const { nombre, anio, descripcion, profesor, materia } = req.body;
 
-    const folderName = req.file.destination.split('\\').pop(); //Agarro el nombre de la carpeta donde va a estar el archivo
-    const rutaArchivo = `uploads/${folderName}/${req.file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
-
-    const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
-
-    let tipo = '';
-    if (['.jpg', '.jpeg', '.png', '.gif', '.svg'].includes(extension)) {
-      tipo = 'imagen';
-    } else if (['.pdf', '.doc', '.docx', '.ppt', '.pptx'].includes(extension)) {
-      tipo = 'archivo';
-    } else {
-      tipo = 'desconocido';
-    }
 
     try {
+      const rutasArchivos = [];
+      const tiposArchivos = [];
+
+      //Itero sobre todos los archivos subidos
+      req.files.forEach((file) => {
+        const folderName = file.destination.split('\\').pop(); //Agarro el nombre de la carpeta donde va a estar el archivo
+        const rutaArchivo = `uploads/${folderName}/${file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
+        const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
+
+        let tipo = '';
+        if (['.jpg', '.jpeg', '.png', '.gif', '.svg'].includes(extension)) {
+          tipo = 'imagen';
+        } else if (['.pdf', '.doc', '.docx', '.ppt', '.pptx'].includes(extension)) {
+          tipo = 'archivo';
+        } else {
+          tipo = 'desconocido';
+        }
+
+        rutasArchivos.push(rutaArchivo);
+        tiposArchivos.push(tipo);
+      })
+
+
       const nuevoMaterial = new Material({
         nombre,
         anio,
         descripcion,
         profesor,
-        rutaArchivo,
+        rutasArchivos,
         materia,
-        tipo
+        tipo: tiposArchivos
       });
 
       await nuevoMaterial.save();
@@ -78,17 +88,10 @@ class MaterialesController {
         return res.status(404).send('Material no encontrado');
       }
 
-      // Eliminar el archivo del sistema de archivos
-      console.log(fs);
-      
-      console.log(material.rutaArchivo);
-      
-      fs.unlink(material.rutaArchivo, (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).send('Error al eliminar el archivo');
-        }
-      });
+      // Eliminar todos los archivos usando Promise.all()
+      await Promise.all(material.rutasArchivos.map(async (rutaArchivo) => {
+        await fs.promises.unlink(rutaArchivo); 
+      }));
 
       // Eliminar el registro de la base de datos
       await material.deleteOne();
@@ -97,7 +100,8 @@ class MaterialesController {
       console.error(error);
       res.status(500).send('Error al eliminar el material');
     }
-  }
+  };
+
 
   //Traer todos los materiales de una materia
   static getMaterialesByMateria = async (req, res) => {
@@ -174,7 +178,7 @@ class MaterialesController {
       res.json(materialesReportados)
     } catch (error) {
       console.log(error);
-      
+
       return res.status(500).send('Error al obtener materiales reportados');
     }
   }
