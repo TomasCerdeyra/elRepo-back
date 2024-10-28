@@ -18,7 +18,7 @@ class AuthController {
                 return next(err);
             }
             req.session.destroy();
-            res.redirect('http://localhost:5173/');  // Redirigir a la página de login después de cerrar sesión
+            res.redirect('http://localhost:5173/'); // Redirigir a la página de login después de cerrar sesión
         });
     };
 

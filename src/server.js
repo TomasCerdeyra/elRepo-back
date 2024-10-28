@@ -21,7 +21,12 @@ const app = express();
 //Permito el formato json
 app.use(express.json());
 
-app.use(cors())
+const corsOption = {
+    origin: 'http://localhost:5173', // Permitir solo este origen
+    credentials: true, // Permitir el envío de credenciales
+}
+
+app.use(cors(corsOption))
 
 // Configura la sesión
 app.use(session({

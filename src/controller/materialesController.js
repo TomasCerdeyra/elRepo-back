@@ -114,7 +114,7 @@ class MaterialesController {
         return res.status(404).send('Materia no encontrada');
       }
 
-      const materiales = await Material.find({ materia: req.params.id })
+      const materiales = await Material.find({ materia: req.params.id }).sort({anio: -1})
 
       if (!materiales) {
         return res.status(404).send('Esta materia no tiene material en este momento');
