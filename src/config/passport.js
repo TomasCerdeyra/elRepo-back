@@ -1,4 +1,5 @@
 import passport from 'passport';
+import adminEmails from '../../adminsEmails.json' assert { type: 'json' }
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import User from '../models/User.js';
 
@@ -20,7 +21,7 @@ const configurePassport = () => {
       }
 
       //Estos correros mas adelante tomarlos desde un archivo fuera del programa
-      const isAdmin = ['tcerdeyra@alumnos.unsada.edu.ar', 'cerdeyra@alumnos.unsada.edu.ar'].includes(profile.emails[0].value);
+      const isAdmin = adminEmails.admins.includes(profile.emails[0].value);
 
       user = new User({
         googleId: profile.id,

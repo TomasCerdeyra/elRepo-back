@@ -11,6 +11,7 @@ import AuthRoutes from './routes/authRoutes.js'
 import CarrerasRoutes from "./routes/carrerasRoutes.js";
 import MateriasRoutes from './routes/materiasRoutes.js'
 import MaterialesRoutes from './routes/materialesRouters.js'
+import AdminsRoutes from './routes/adminsRoutes.js'
 
 //Configuro variables de entorlo para la apiclacion
 dotenv.config();
@@ -48,5 +49,6 @@ app.use("/api/auth", AuthRoutes)
 app.use("/api/carreras", CarrerasRoutes);
 app.use("/api/materias", MateriasRoutes);
 app.use("/api/materiales", MaterialesRoutes)
+app.use("/api/admins", AdminsRoutes)
 
 export default app;
