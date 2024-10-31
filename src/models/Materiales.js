@@ -10,6 +10,10 @@ const MaterialSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  tipoAporte: {
+    type: String,
+    required: true
+  },
   descripcion: {
     type: String,
     trim: true

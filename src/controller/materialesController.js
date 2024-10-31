@@ -7,7 +7,7 @@ class MaterialesController {
 
   // Subir un material
   static subirMaterial = async (req, res) => {
-    const { nombre, anio, descripcion, profesor, materia } = req.body;
+    const { nombre, anio, descripcion, profesor, materia, tipoAporte } = req.body;
 
 
     try {
@@ -41,6 +41,7 @@ class MaterialesController {
         profesor,
         rutasArchivos,
         materia,
+        tipoAporte,
         tipo: tiposArchivos
       });
 
