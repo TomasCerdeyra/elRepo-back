@@ -11,11 +11,22 @@ class MaterialesController {
 
 
     try {
+      const maxFileSize = 5 * 1024 * 1024; // 5 MB por archivo
+      const maxTotalSize = 20 * 1024 * 1024; // 20 MB en total  
+      let totalSize = 0;
+
       const rutasArchivos = [];
       const tiposArchivos = [];
 
       //Itero sobre todos los archivos subidos
       req.files.forEach((file) => {
+        totalSize += file.size; // Sumar el tamaño del archivo
+
+        // Validar el tamaño de cada archivo
+        if (file.size > maxFileSize) {
+          throw new Error(`El archivo ${file.originalname} excede el tamaño máximo permitido de 5 MB.`);
+        }
+
         const folderName = file.destination.split('\\').pop(); //Agarro el nombre de la carpeta donde va a estar el archivo
         const rutaArchivo = `uploads/${folderName}/${file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
         const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
@@ -33,6 +44,10 @@ class MaterialesController {
         tiposArchivos.push(tipo);
       })
 
+      // Validar el tamaño total de los archivos
+      if (totalSize > maxTotalSize) {
+        return res.status(400).send('El tamaño total de los archivos excede el límite máximo permitido de 20 MB.');
+      }
 
       const nuevoMaterial = new Material({
         nombre,
@@ -91,7 +106,7 @@ class MaterialesController {
 
       // Eliminar todos los archivos usando Promise.all()
       await Promise.all(material.rutasArchivos.map(async (rutaArchivo) => {
-        await fs.promises.unlink(rutaArchivo); 
+        await fs.promises.unlink(rutaArchivo);
       }));
 
       // Eliminar el registro de la base de datos
@@ -115,7 +130,7 @@ class MaterialesController {
         return res.status(404).send('Materia no encontrada');
       }
 
-      const materiales = await Material.find({ materia: req.params.id }).sort({anio: -1})
+      const materiales = await Material.find({ materia: req.params.id }).sort({ anio: -1 })
 
       if (!materiales) {
         return res.status(404).send('Esta materia no tiene material en este momento');
