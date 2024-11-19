@@ -1,7 +1,8 @@
+import config from '../config/config.js';
 import fs from 'fs'
 import path from 'path';
 
-const addAdminPath = path.resolve('adminsEmails.json');
+const addAdminPath = config.ULR_ADMINS;
 
 class adminController {
 

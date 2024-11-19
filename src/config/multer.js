@@ -1,3 +1,4 @@
+import config from './config.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -18,7 +19,7 @@ const storage = multer.diskStorage({
 
       // Convertir el nombre de la materia a minúsculas y reemplazar los espacios por guiones
       const folderName = materia.name.toLowerCase().replace(/\s+/g, '-');
-      const folderPath = path.join('uploads', folderName); // Ruta 'uploads/nombre-materia'
+      const folderPath = path.join(config.URL_FIELDS, folderName); // Ruta 'uploads/nombre-materia'
 
       // Si no existe la carpeta, crearla
       if (!fs.existsSync(folderPath)) {

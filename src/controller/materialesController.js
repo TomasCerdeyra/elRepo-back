@@ -1,3 +1,4 @@
+import config from '../config/config.js';
 import Material from '../models/Materiales.js';
 import fs from 'fs'
 import Materias from '../models/Materias.js';
@@ -21,12 +22,12 @@ class MaterialesController {
       //Itero sobre todos los archivos subidos
       req.files.forEach((file) => {
         totalSize += file.size; // Sumar el tamaño del archivo
-
+        
         // Validar el tamaño de cada archivo
         if (file.size > maxFileSize) {
           throw new Error(`El archivo ${file.originalname} excede el tamaño máximo permitido de 5 MB.`);
         }
-
+        console.log(file.destination);
         const folderName = file.destination.split('\\').pop(); //Agarro el nombre de la carpeta donde va a estar el archivo
         const rutaArchivo = `uploads/${folderName}/${file.filename}`; //Hago la ruta con la carpeta done se va a ubicar el archivo
         const extension = path.extname(rutaArchivo).toLowerCase(); //Saco la extension del archivo que viene
@@ -106,7 +107,9 @@ class MaterialesController {
 
       // Eliminar todos los archivos usando Promise.all()
       await Promise.all(material.rutasArchivos.map(async (rutaArchivo) => {
-        await fs.promises.unlink(rutaArchivo);
+        const rutaSinUpload = rutaArchivo.replace('uploads', '')
+        const rutaCompleta = config.URL_FIELDS + rutaSinUpload
+        await fs.promises.unlink(rutaCompleta);
       }));
 
       // Eliminar el registro de la base de datos
