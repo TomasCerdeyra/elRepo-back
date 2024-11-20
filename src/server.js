@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Sirvo los archivos subidos para tomarlos del front
-app.use('/uploads', express.static('C:/Users/Usuario/Desktop/uploads'));
+app.use('/uploads', express.static(config.URL_FIELDS));
 
 //Rutas
 app.use("/api/auth", AuthRoutes)
