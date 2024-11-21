@@ -15,7 +15,7 @@ const config = {
     SESSION_SECRET: process.env.SESSION_SECRET,
 
     PORT: process.env.PORT,
-    ULR_ADMINS: process.env.ULR_ADMINS,
+    ULR_ADMINS: process.env.URL_ADMINS,
     URL_FIELDS: process.env.URL_FIELDS
 };
 
