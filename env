@@ -1,8 +1,0 @@
-DB_URL=mongodb+srv://elrepo:facugrupo2024@cluster0.ts1ug.mongodb.net/elRepo
-GOOGLE_CLIENT_ID=857200476086-kmegdp5r6klb2frhas4fsjv32htqrsem.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
-SESSION_SECRET=elRepo2024
-
-PORT=8080
-URL_ADMINS=C:/Users/Usuario/Desktop/adminsEmails.json
-URL_FIELDS=C:/Users/Usuario/Desktop/uploads
