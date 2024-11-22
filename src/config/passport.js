@@ -12,7 +12,7 @@ try {
   adminsEmails = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 } catch (error) {
   console.error('Error al leer el archivo adminsEmails.json:', error.message);
-  adminsEmails = { admins: [] }; // Usar un valor predeterminado para evitar errores
+  adminsEmails = { admins: [] };
 }
 
 const configurePassport = () => {

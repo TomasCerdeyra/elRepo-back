@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 
 const corsOption = {
-    origin: 'http://localhost:5173', // Permitir solo este origen
+    origin: 'http://localhost:5173', // Permitir solo este origen para hacer peticiones
     credentials: true, // Permitir el envío de credenciales
 }
 
@@ -33,7 +33,7 @@ app.use(session({
 
 
 // Configura Passport
-configurePassport(); // Llama a la función para configurar Passport
+configurePassport(); 
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -88,7 +88,7 @@ class MaterialesController {
   // Obtener todos los materiales
   static getMateriales = async (req, res) => {
     try {
-      const materiales = await Material.find() // Populamos la referencia de la materia
+      const materiales = await Material.find() 
       res.json(materiales);
     } catch (error) {
       console.error(error);

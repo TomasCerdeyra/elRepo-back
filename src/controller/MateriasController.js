@@ -13,7 +13,6 @@ class materiasController {
                 return res.status(404).send('Esta materia ya existe');
             }
 
-            //Busco las carreras que tengan el nombre de las que  me vienen en la peticion
             const carrerasEncontradas = await Carreras.find({ name: { $in: carreras } });
             //Tomo las id de las carreras
             const idsCarreras = carrerasEncontradas.map(carrera => carrera._id);
@@ -45,9 +44,9 @@ class materiasController {
     static deleteMateria = async (req, res) => {
         const { id } = req.params;  //obtencion del id de la materia
         try {
-            const materia = await Materias.findByIdAndDelete(id); //buscar y elimina la materia por su identificador. Si no se encuentra, el resultado será null
+            const materia = await Materias.findByIdAndDelete(id); 
             if (!materia) {
-                return res.status(404).send('Materia no encontrada')  //Si no se encuentra la materia con el id proporcionado, se envía una respuesta con un estado 404 indicando que la materia no fue hallada.
+                return res.status(404).send('Materia no encontrada') 
             }
             res.json('Materia eliminada correctamente');
         } catch (error) {
@@ -83,8 +82,7 @@ class materiasController {
                 return res.status(404).send('Materias no encontrada en la carrera');
             }
 
-            res.json(materias);
-            //la respuesta de esta petición GET será un JSON de las materias que estan asociadas al ID de la carrera   
+            res.json(materias);   
         } catch (error) {
             console.log(error);
             res.status(500).send('Error al obtener las materias por carrera')
@@ -101,7 +99,6 @@ class materiasController {
             // Busca todas las materias
             const materias = await Materias.find();
     
-            // Busca la materia cuya versión normalizada coincida con el input normalizado
             const matchedMateria = materias.find(materia => {
                 const normalizedName = materia.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                 return normalizedName === normalizedInputName;
